@@ -5,15 +5,15 @@ def fib(n):
         a, b = b, a+b
         print(b)"""
 
-# 第二种
+# 第二种,yield更节省存储空间
 import sys
 
 def fibonacci(n):  # 生成器函数 - 斐波那契
     a, b, counter = 0, 1, 0
     while True:
-        if (counter > n):
+        if (counter >= n):
             return
-        yield a
+        yield b
         a, b = b, a+b
         counter += 1
 
