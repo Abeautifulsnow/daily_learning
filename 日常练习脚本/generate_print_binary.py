@@ -2,6 +2,7 @@
 An Interesting Method to Generate Binary Numbers from 1 to n.
 """
 import time
+import sys
 from queue import Queue
 
 
@@ -29,6 +30,7 @@ def generatePrintBinary(n):
 
 if __name__ == "__main__":
     start = time.monotonic()
-    n = 10
+    input_num = sys.argv[1]
+    n = int(input_num)
     generatePrintBinary(n)
     print("# Total time cost: {0} s.".format(time.monotonic() - start))
