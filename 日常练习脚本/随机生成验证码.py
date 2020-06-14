@@ -17,7 +17,8 @@ print(ma)
 """
 
 # 法二：
-import random, string
+import random
+import string
 
 str1 = string.digits
 str2 = string.ascii_letters

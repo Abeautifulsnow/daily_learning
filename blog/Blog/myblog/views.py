@@ -18,6 +18,7 @@ class IndexView(View):
     def get(self, request):
         all_blog = Blog.objects.all().order_by('-id')
         # 博客、标签、分类数目统计
+        # count_nums = get_object_or_404(Counts, pk=1)
         count_nums = Counts.objects.get(id=1)
         blog_nums = count_nums.blog_nums
         cate_nums = count_nums.category_nums
@@ -137,7 +138,7 @@ class BlogDetailView(View):
         # 博客点击数+1, 评论数统计
         blog.click_nums += 1
         blog.save()
-        #获取评论内容
+        # 获取评论内容
         all_comment = Comment.objects.filter(blog_id=blog_id)
         comment_nums = all_comment.count()
         # 将博客内容用markdown显示出来
@@ -159,7 +160,7 @@ class BlogDetailView(View):
             if not blog_next:
                 id_next += 1
             else:
-                has_next = True;
+                has_next = True
 
         return render(request, 'blog-detail.html', {
             'blog': blog,
@@ -236,7 +237,7 @@ class MySearchView(SearchView):
         return context
 
     def build_page(self):
-        #分页重写
+        # 分页重写
         super(MySearchView, self).extra_context()
 
         try:
@@ -247,14 +248,13 @@ class MySearchView(SearchView):
         if page_no < 1:
             raise HttpResponse("Pages should be 1 or greater.")
 
-
         paginator = Paginator(self.results, HAYSTACK_SEARCH_RESULTS_PER_PAGE, request=self.request)
         page = paginator.page(page_no)
 
-        return (paginator, page)
+        return paginator, page
 
 
-#配置404 500错误页面
+# 配置404 500错误页面
 def page_not_found(request):
     return render(request, '404.html')
 

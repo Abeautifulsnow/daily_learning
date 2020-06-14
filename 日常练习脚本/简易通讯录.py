@@ -11,7 +11,7 @@ while flag == 'a' or 'b' or '#':
         # 判断中文正则模板
         chinese_pat = re.compile(r"[\u4e00-\u9fa5]+")
         # 判断手机号是否合法正则模板
-        mobile_pat = re.compile("^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$")
+        mobile_pat = re.compile(r"^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$")
         
         phone_name = "".join(re.findall(chinese_pat, input_content))
         phone_num = "".join(re.findall(r"\d+", input_content))

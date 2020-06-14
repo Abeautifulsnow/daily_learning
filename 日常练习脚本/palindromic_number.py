@@ -37,4 +37,4 @@ if __name__ == "__main__":
     distinguish_palindromic_number(input_number)
     distinguish_palindromic_number_way_2(input_number)
     end = time.monotonic()
-    print(f"# Total time cost: {end-start} s")
+    print(f"# Total time cost: {end-start}s elapsed.")

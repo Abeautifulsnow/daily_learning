@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url
+from django.urls import path, re_path
 from django.contrib import admin
 from django.views.static import serve
 
@@ -25,21 +26,36 @@ from myblog.views import (AddCommentView, ArichiveView, BlogDetailView,
                           TagDetailView, TagView)
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^archive/$', ArichiveView.as_view(), name='archive'),
-    url(r'^tags/$', TagView.as_view(), name='tags'),
-    url(r'^tags/(?P<tag_name>\w+)$', TagDetailView.as_view(), name='tag_name'),
-    url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
-    url(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
-    url(r'^rss/$', BlogRssFeed(), name='rss'),
-    url(r'^category/(?P<category_name>\w+)/$', CategoryDetaiView.as_view(), name='category_name'),
-    url(r'^search/', MySearchView(),  name='haystack_search'),
+    path('admin/', admin.site.urls),
+    path('', IndexView.as_view(), name='index'),
+    path('blog/<int:blog_id>', BlogDetailView.as_view(), name='blog_id'),
+    path('archive/', ArichiveView.as_view(), name='archive'),
+    path('tags/', TagView.as_view(), name='tags'),
+    re_path(r'^tags/(?P<tag_name>\w+)$', TagDetailView.as_view(), name='tag_name'),
+    re_path(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
+    path(r'rss/', BlogRssFeed(), name='rss'),
+    re_path(r'^category/(?P<category_name>\w+)/$', CategoryDetaiView.as_view(), name='category_name'),
+    path(r'^search/', MySearchView(),  name='haystack_search'),
 
     # 添加静态文件的访问处理函数
-    url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
     # 静态文件处理
-    url(r'^static/(?P<path>.*)/$', serve, {'document_root': STATIC_ROOT}),
+    re_path(r'^static/(?P<path>.*)/$', serve, {'document_root': STATIC_ROOT}),
+    # url(r'^admin/', admin.site.urls),
+    # url(r'^$', IndexView.as_view(), name='index'),
+    # url(r'^archive/$', ArichiveView.as_view(), name='archive'),
+    # url(r'^tags/$', TagView.as_view(), name='tags'),
+    # url(r'^tags/(?P<tag_name>\w+)$', TagDetailView.as_view(), name='tag_name'),
+    # url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
+    # url(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
+    # url(r'^rss/$', BlogRssFeed(), name='rss'),
+    # url(r'^category/(?P<category_name>\w+)/$', CategoryDetaiView.as_view(), name='category_name'),
+    # url(r'^search/', MySearchView(),  name='haystack_search'),
+    #
+    # # 添加静态文件的访问处理函数
+    # url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
+    # # 静态文件处理
+    # url(r'^static/(?P<path>.*)/$', serve, {'document_root': STATIC_ROOT}),
 ]
 
 # 配置全局404页面

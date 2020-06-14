@@ -6,7 +6,7 @@ import sys
 from queue import Queue
 
 
-def generatePrintBinary(n):
+def generate_print_binary(n):
     q = Queue()
     # enqueue the first binary number.
     q.put("1")
@@ -32,5 +32,5 @@ if __name__ == "__main__":
     start = time.monotonic()
     input_num = sys.argv[1]
     n = int(input_num)
-    generatePrintBinary(n)
+    generate_print_binary(n)
     print("# Total time cost: {0} s.".format(time.monotonic() - start))

@@ -1,5 +1,5 @@
 print("测试实例1")
-str = "runstone.top"
+str = 'runstone.top'
 print(str.isalnum())    # 判断所有字符都是数字或者字母
 print(str.isalpha())    # 判断所有字符都是字母
 print(str.isdigit())    # 判断所有字符都是数字
@@ -18,4 +18,4 @@ print(str.isdigit())
 print(str.islower())
 print(str.isupper())
 print(str.istitle())
-print(str.isspace()) 
+print(str.isspace())

@@ -6,11 +6,14 @@
     4、持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。
 """
 list1 = [56, 12, 1, 8, 354, 10, 100, 34, 56, 7, 23, 456, 234, -58]
-def sortport(nums):
+
+
+def sort_port(nums):
     for i in range(len(nums) - 1):
         for j in range(len(nums) - 1 - i):
             if nums[j] > nums[j + 1]:
                 nums[j], nums[j + 1] = nums[j + 1], nums[j]
     return nums
-    
-print(sortport(list1))
+
+
+print(sort_port(list1))

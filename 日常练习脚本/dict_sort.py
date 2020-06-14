@@ -5,6 +5,7 @@
 # print(sorted_dict)
 
 # 法二：lambda实现
-dict = {1:2, 3:4, 4:3, 2:1, 0:0}
+
+dict = {1: 2, 3: 4, 4: 3, 2: 1, 0: 0}
 sorted_dict = sorted(dict.items(), key=lambda item: item[1])
 print(sorted_dict)

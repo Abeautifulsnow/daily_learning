@@ -1,9 +1,8 @@
-'''
+"""
 计算每个月天数
-'''
+"""
 
 import calendar
-import datetime
 
 this_year = int(input("Enter year: "))
 this_month = int(input("Enter month: "))

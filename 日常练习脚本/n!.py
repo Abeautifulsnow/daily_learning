@@ -1,6 +1,8 @@
 """
 f(n)=n*f(n-1)
 """
+
+
 def factorial():
     num = int(input("请输入一个数字："))
     fac = 1
@@ -13,6 +15,7 @@ def factorial():
         for i in range(1, num + 1):
             fac = fac * i
         print("%d 的阶乘为 %d" % (num, fac))
+
 
 # 实例化
 factorial()

@@ -1,6 +1,6 @@
-'''
+"""
 字符串大小写转换
-'''
+"""
 str = "http://www.runstone.top/blog/"
 print(str.upper())  # 全部转换为大写
 print(str.lower())  # 全部转换为小写

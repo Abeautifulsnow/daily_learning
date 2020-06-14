@@ -2,7 +2,7 @@ import turtle
 import time
 
 
-def LittleHeart():
+def little_heart():
     for i in range(200):
         turtle.right(1)
         turtle.forward(2)
@@ -25,9 +25,9 @@ turtle.speed(5)
 turtle.begin_fill()
 turtle.left(140)
 turtle.forward(224)
-LittleHeart()
+little_heart()
 turtle.left(120)
-LittleHeart()
+little_heart()
 turtle.forward(224)
 turtle.end_fill()
 turtle.pensize(5)

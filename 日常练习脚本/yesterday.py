@@ -1,10 +1,12 @@
 import datetime
 
-def getYesterday():
+
+def get_yesterday():
     today = datetime.date.today()
-    oneday = datetime.timedelta(days=1)
-    yesterday = today - oneday
+    one_day = datetime.timedelta(days=1)
+    yesterday = today - one_day
     return yesterday
 
+
 # 输出
-print(getYesterday())
+print(get_yesterday())
