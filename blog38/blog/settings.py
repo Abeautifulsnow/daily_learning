@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # self apps
     'myblog',
     # third-party apps
-    'el_pagination',
+    # 'el_pagination',
     'haystack'
 ]
 

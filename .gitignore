@@ -1,1 +1,6 @@
 __pycache__/
+*.xml
+*.iml
+.DS_Store
+settings.json
+.gitignore
