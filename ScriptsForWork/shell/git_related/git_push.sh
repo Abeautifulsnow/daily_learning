@@ -1,9 +1,8 @@
 #!/bin/bash
-commit=$1
-default_branch=${2:-master}
-
 function create_branch_if_not_exist()
 {
+    default_branch=${2:-master}
+
     branch_arr=$(git branch -a)
     for branch in "${branch_arr}"
     do
@@ -21,6 +20,8 @@ function create_branch_if_not_exist()
 
 function gen_commit_if_empty()
 {
+    commit=$1
+
     git_comment="$(date +%F' '%r)"
     if [[ ${commit} -eq "" ]]
     then
@@ -31,31 +32,34 @@ function gen_commit_if_empty()
     echo "The commit's content are: ${commit}"
 }
 
+function push_code()
+{
+    while true;
+    do
+        read -r -p "Continue or not? [Y/n] " input
+    
+        case $input in
+            [yY][eE][sS]|[yY])
+                echo "Continue to submit..."
+                git add -A
+                git commit -m "${commit}"
+                git push origin ${default_branch}
+                exit 1
+                ;;
+    
+            [nN][oO]|[nN])
+                echo "Submit interrupted..."
+                exit 1
+                ;;
+            *)
+            echo "Input error, please retry it..."
+            ;;
+        esac
+    done
+}
+
+# Execute the flow of pushing code to git repository.
 create_branch_if_not_exist
-
 git status
-
 gen_commit_if_empty
-
-while true;
-do
-    read -r -p "Continue or not? [Y/n] " input
- 
-    case $input in
-        [yY][eE][sS]|[yY])
-            echo "Continue to submit..."
-            git add -A
-            git commit -m "${commit}"
-            git push origin ${default_branch}
-            exit 1
-            ;;
- 
-        [nN][oO]|[nN])
-            echo "Submit interrupted..."
-            exit 1
-            ;;
-        *)
-        echo "Input error, please retry it..."
-        ;;
-    esac
-done
+push_code
