@@ -19,9 +19,23 @@ function create_branch_if_not_exist()
     done
 }
 
+function gen_commit_if_empty()
+{
+    git_comment="$(date +%F' '%r)"
+    if [[ ${commit} -eq "" ]]
+    then
+        commit="$git_comment push code"
+    else
+        commit=${commit}
+    fi
+    echo "The commit's content are: ${commit}"
+}
+
 create_branch_if_not_exist
 
 git status
+
+gen_commit_if_empty
 
 while true;
 do
@@ -33,14 +47,13 @@ do
             git add -A
             git commit -m "${commit}"
             git push origin ${default_branch}
-                        exit 1
+            exit 1
             ;;
  
         [nN][oO]|[nN])
             echo "Submit interrupted..."
             exit 1
-                   ;;
- 
+            ;;
         *)
         echo "Input error, please retry it..."
         ;;
