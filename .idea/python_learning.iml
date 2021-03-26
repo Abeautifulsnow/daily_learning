@@ -10,6 +10,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/blog/Blog/templates" />
+        <option value="$MODULE_DIR$/blog38/templates" />
       </list>
     </option>
   </component>
