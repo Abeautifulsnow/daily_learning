@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>数值列表拼接</el-header>
+            <el-main>
+                <el-radio-group v-model="radio">
+                    <el-radio :label="3">点</el-radio>
+                    <el-radio :label="6">线</el-radio>
+                    <el-radio :label="9">多边形</el-radio>
+                </el-radio-group>
+
+                <el-divider><i class="el-icon-s-operation"></i></el-divider>
+
+                <el-form
+                    ref="form"
+                    :inline="true"
+                    :model="form_xy"
+                    label-width="80px"
+                >
+                    <!-- form_xy.dynamicitem is a hash data structure. -->
+                    <div class="input-xy" v-for="(item, index) in form_xy.dynamicitem" :key="index">
+                        <el-form-item
+                            label="输入x"
+                            :prop="'dynamicitem.' + index + '.name'"
+                        >
+                            <el-input
+                                placeholder="请输入x值"
+                                prefix-icon="el-icon-edit"
+                                v-model="item.input_x"
+                                autosize
+                                required
+                            >
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item
+                            label="输入y"
+                            :prop="'dynamicitem.' + index + '.name'"
+                        >
+                            <el-input
+                                placeholder="请输入y值"
+                                prefix-icon="el-icon-edit"
+                                v-model="item.input_y"
+                                autosize
+                                required
+                            >
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <i class="el-icon-delete" @click="deleteItem(item, index)"></i>
+                        </el-form-item>
+                    </div>
+                </el-form>
+                <el-button type="success" icon="el-icon-plus" circle size="small" @click="onAdd"></el-button>
+
+                <!-- divider -->
+                <el-divider><i class="el-icon-s-platform"></i></el-divider>
+                <span class="data-display">
+                    <el-button type="primary" native-type="submit" size="small" @click="DisplayData">
+                        数据展示<i class="el-icon-video-camera-solid el-icon--right"></i>
+                    </el-button>
+                    <br><br>
+                    {{ out_array }}
+                </span>
+            </el-main>
+        </el-container>
+    </div>
+    <!-- 引入vue.js -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    radio: '',
+                    form_xy: {
+                        dynamicitem: []
+                    },
+                    out_array: null
+                }
+            },
+            methods: {
+                DisplayPointData(item_array, total_data) {
+                    const element = item_array[0]
+                    total_data.push(parseFloat(element.input_x), parseFloat(element.input_y))
+                    this.out_array=JSON.stringify(total_data)
+                },
+                DisplayLineData(item_array, total_data) {
+                    for (let index = 0; index < item_array.length; index++) {
+                        const element = item_array[index];
+                        total_data.push([parseFloat(element.input_x), parseFloat(element.input_y)])
+                    }
+                    this.out_array=JSON.stringify(total_data)
+                },
+                DisplayPolygonData(item_array, total_data) {
+                    for (let index = 0; index < item_array.length; index++) {
+                        const element = item_array[index];
+                        total_data.push([parseFloat(element.input_x), parseFloat(element.input_y)])
+                    }
+                    total_data.push([parseFloat(item_array[0].input_x), parseFloat(item_array[0].input_y)])
+                    this.out_array=JSON.stringify(total_data)
+                },
+                DisplayData() {
+                    let radio_hash = {
+                        3: '点',
+                        6: '线',
+                        9: '多边形'
+                    }
+                    let item_array = this.form_xy.dynamicitem
+                    let total_data = []
+                    let current_radio = this.radio
+
+                    switch(current_radio) {
+                        case 3:
+                            this.DisplayPointData(item_array, total_data)
+                            break
+                        case 6:
+                            this.DisplayLineData(item_array, total_data)
+                            break
+                        case 9:
+                            this.DisplayPolygonData(item_array, total_data)
+                            break
+                        default:
+                            this.DisplayPolygonData(item_array, total_data)
+                            break
+                    }
+                },
+                onAdd() {
+                    this.form_xy.dynamicitem.push({
+                        input_x: '',
+                        input_y: ''
+                    })
+                },
+                deleteItem(item, index) {
+                    this.form_xy.dynamicitem.splice(index, 1)
+                }
+            },
+        })
+    </script>
+</body>
+<style>
+    .el-header, .el-footer {
+      background-color: #B3C0D1;
+      color: #333;
+      text-align: center;
+      line-height: 60px;
+    }
+    
+    .el-aside {
+      background-color: #D3DCE6;
+      color: #333;
+      text-align: center;
+      line-height: 200px;
+    }
+    
+    .el-main {
+      background-color: #E9EEF3;
+      color: #333;
+      text-align: center;
+    }
+    
+    body > .el-container {
+      margin-bottom: 40px;
+    }
+    
+    .el-container:nth-child(5) .el-aside,
+    .el-container:nth-child(6) .el-aside {
+      line-height: 260px;
+    }
+    
+    .el-container:nth-child(7) .el-aside {
+      line-height: 320px;
+    }
+</style>
+</html>
