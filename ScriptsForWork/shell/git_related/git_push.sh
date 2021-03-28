@@ -74,3 +74,4 @@ commit_in=$1
 branch_in=${2:-master}
 exe_flow "${commit_in}" "${branch_in}"
 echo -e "\033[32m💫💫💫 All done...\033[0m"
+exit 0
