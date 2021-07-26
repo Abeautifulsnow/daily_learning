@@ -1,14 +1,11 @@
 #!/bin/bash
-function create_branch_if_not_exist()
-{
+function create_branch_if_not_exist() {
     default_branch=$1
 
     branch_arr=$(git branch -a)
-    for branch in "${branch_arr}"
-    do
+    for branch in "${branch_arr}"; do
         branch_in=$(echo "${branch}" | grep "${default_branch}")
-        if [[ ${branch_in} != "" ]]
-        then
+        if [[ ${branch_in} != "" ]]; then
             default_branch=${default_branch}
             git checkout "${default_branch}"
         else
@@ -19,13 +16,11 @@ function create_branch_if_not_exist()
     done
 }
 
-function gen_commit_if_empty()
-{
+function gen_commit_if_empty() {
     commit=$1
 
     git_comment="$(date +%F' '%r)"
-    if [[ ${commit} == "" ]]
-    then
+    if [[ ${commit} == "" ]]; then
         commit="${git_comment} push code"
     else
         commit=${commit}
@@ -33,26 +28,24 @@ function gen_commit_if_empty()
     echo -e "\033[32m✨✨✨ The commit's content are: ${commit}\033[0m"
 }
 
-function push_code()
-{
-    while true;
-    do
+function push_code() {
+    while true; do
         read -r -p "🌝🌝🌝 Continue or not? [Y/n] " input
-    
+
         case $input in
-            [yY][eE][sS]|[yY])
-                echo -e "\033[33mContinue to submit...\033[0m"
-                git add -A
-                git commit -m "${commit}"
-                git push origin ${default_branch}
-                exit 1
-                ;;
-    
-            [nN][oO]|[nN])
-                echo -e "\033[31m💥💥💥 Submit interrupted...\033[0m"
-                exit 1
-                ;;
-            *)
+        [yY][eE][sS] | [yY])
+            echo -e "\033[33mContinue to submit...\033[0m"
+            git add -A
+            git commit -m "${commit}"
+            git push origin ${default_branch}
+            exit 1
+            ;;
+
+        [nN][oO] | [nN])
+            echo -e "\033[31m💥💥💥 Submit interrupted...\033[0m"
+            exit 1
+            ;;
+        *)
             echo -e "\033[31m💥💥💥 Input error, please retry it...\033[0m"
             ;;
         esac
@@ -60,8 +53,7 @@ function push_code()
 }
 
 # Execute the flow of pushing code to git repository.
-function exe_flow ()
-{
+function exe_flow() {
     commit_arg=$1
     branch_arg=$2
     create_branch_if_not_exist "${branch_arg}"

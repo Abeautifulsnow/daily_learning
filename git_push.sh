@@ -1,1 +1,1 @@
-ScriptsForWork/shell/git_related/git_push.sh
+./工作代码/shell/git_related/git_push.sh
