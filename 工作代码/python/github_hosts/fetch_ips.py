@@ -72,9 +72,10 @@ def write_file(hosts_content: str, update_time: str):
         with open(output_doc_file_path, "r") as old_readme_fb:
             old_content = old_readme_fb.read()
             old_hosts = old_content.split("```bash")[1].split("```")[0].strip()
-            old_hosts = old_hosts.split("# Update time:")[0]
-        if old_hosts == hosts_content:
-            print("host not change")
+            old_hosts = old_hosts.split("# Update time:")[0].strip()
+            hosts_content_hosts = hosts_content.split("# Update time:")[0].strip()
+        if old_hosts == hosts_content_hosts:
+            print("==============host not change")
             return False
 
     with open(template_path, "r") as temp_fb:
