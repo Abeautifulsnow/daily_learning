@@ -1,1 +1,1 @@
-./工作代码/shell/git_related/git_push.sh
+useful_code/shell/git_related/git_push.sh
