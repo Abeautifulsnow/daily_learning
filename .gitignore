@@ -6,3 +6,4 @@ settings.json
 .gitignore
 .idea
 .vscode
+node_modules
