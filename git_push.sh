@@ -1,1 +1,1 @@
-useful_code/shell/git_related/git_push.sh
+scripts/shell/git_related/git_push.sh
