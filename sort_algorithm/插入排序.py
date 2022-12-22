@@ -18,6 +18,19 @@ def InsertionSort(arr):
     return arr
 
 
+# 第二种插入排序算法
+def insertion_sort1(data: list[int]) -> list[int]:
+    if len(data) < 2:
+        return data
+
+    for i in range(0, len(data)):
+        for j in range(i, 0, -1):
+            if data[j - 1] > data[j]:
+                data[j], data[j - 1] = data[j - 1], data[j]
+
+    return data
+
+
 if __name__ == "__main__":
     nums = input('请输入一串数字, 数字之间空一个间隔：')
     arr = list(map(int, nums.rstrip().split()))
