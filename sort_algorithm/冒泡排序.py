@@ -22,7 +22,6 @@ def short_bubble_sort(arr):
         for i in range(passnum):
             if arr[i] > arr[i + 1]:
                 exchanges = True
-                print(passnum)
                 arr[i], arr[i + 1] = arr[i + 1], arr[i]
 
         passnum -= 1
