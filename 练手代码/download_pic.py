@@ -1,5 +1,9 @@
-import requests, os, time
-import aiohttp, asyncio
+import asyncio
+import os
+import time
+
+import aiohttp
+import requests
 
 
 class Spider(object):

@@ -1,7 +1,8 @@
 # 导入库
-import requests
-import re
 import os
+import re
+
+import requests
 
 
 def download_music():

@@ -1,14 +1,12 @@
 import markdown
-
-from django.shortcuts import render, get_object_or_404
-from django.views import View
-from django.http import HttpResponse
-from pure_pagination import PageNotAnInteger, Paginator
-from haystack.views import SearchView
-
 from Blog.settings import HAYSTACK_SEARCH_RESULTS_PER_PAGE
-from myblog.models import Blog, Category, Tag, Comment, Counts
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
+from haystack.views import SearchView
 from myblog.forms import CommentForm
+from myblog.models import Blog, Category, Comment, Counts, Tag
+from pure_pagination import PageNotAnInteger, Paginator
 
 
 class IndexView(View):

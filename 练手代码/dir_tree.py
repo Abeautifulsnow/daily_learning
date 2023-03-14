@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-
 # method 1
 # def list_files(startpath):
 #     for root, dirs, files in os.walk(startpath):

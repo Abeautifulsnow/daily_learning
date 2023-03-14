@@ -1,16 +1,14 @@
 import markdown
-
-from django.shortcuts import render, get_object_or_404
-from django.views import View
-from django.http import HttpResponse
-from django.core.paginator import PageNotAnInteger, Paginator
-from haystack.views import SearchView
-
 from blog.settings import HAYSTACK_SEARCH_RESULTS_PER_PAGE
-
-from .models import Category, Tag, Blog, Comment, Counts
-from myblog.forms import CommentForm
 from django.contrib import admin
+from django.core.paginator import PageNotAnInteger, Paginator
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
+from haystack.views import SearchView
+from myblog.forms import CommentForm
+
+from .models import Blog, Category, Comment, Counts, Tag
 
 # Create your views here.
 

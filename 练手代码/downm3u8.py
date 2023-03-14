@@ -1,12 +1,12 @@
-import re
-import requests
-import time
-import urllib3
 import asyncio
-import aiofiles
-from typing import List, Dict, IO, Callable
+import re
+import time
+from typing import IO, Callable, Dict, List
 
+import aiofiles
 import httpx
+import requests
+import urllib3
 
 urllib3.disable_warnings()
 

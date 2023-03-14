@@ -1,7 +1,7 @@
+import pathlib
+import queue
 import sys
 import threading
-import queue
-import pathlib
 from typing import Tuple
 
 

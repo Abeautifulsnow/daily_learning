@@ -1,6 +1,6 @@
 import difflib
-import sys
 import logging
+import sys
 
 
 def readfile(filename):

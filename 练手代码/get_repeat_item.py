@@ -1,8 +1,8 @@
 import random
 import time
-import numpy
 from collections import Counter
 
+import numpy
 
 # a = [1, 2, 3, 4, 4, 8, 9]
 # b = [5, 6, 3, 4, 4, 7, 8, 9]

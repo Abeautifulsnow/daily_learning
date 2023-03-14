@@ -1,9 +1,9 @@
+import logging
 import os
 import time
-import logging
 
 # public variables
-log_path = './logs'
+log_path = "./logs"
 os.makedirs(log_path, exist_ok=True)
 
 
@@ -25,10 +25,9 @@ class Log:
             self.now = time.strftime("%Y%m%d-%H%M%S")
 
             if not file_name:
-                self.log_name = os.path.join(log_path, f'{self.now}.log')
+                self.log_name = os.path.join(log_path, f"{self.now}.log")
             else:
-                self.log_name = os.path.join(log_path,
-                                             f'{file_name}-{self.now}.log')
+                self.log_name = os.path.join(log_path, f"{file_name}-{self.now}.log")
         else:
             pass
 
@@ -36,18 +35,19 @@ class Log:
         logger = logging.getLogger()
         logger.setLevel(logging.DEBUG)
 
-        fh = logging.FileHandler(self.log_name, 'a', encoding='utf-8')
+        fh = logging.FileHandler(self.log_name, "a", encoding="utf-8")
         fh.setLevel(logging.DEBUG)
 
         sh = logging.StreamHandler()
         sh.setLevel(logging.DEBUG)
 
         formatter_fh = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        if level == 'warning' or level == 'error':
-            formatter_sh = logging.Formatter('%(levelname)s - %(message)s')
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+        if level == "warning" or level == "error":
+            formatter_sh = logging.Formatter("%(levelname)s - %(message)s")
         else:
-            formatter_sh = logging.Formatter('%(message)s')
+            formatter_sh = logging.Formatter("%(message)s")
 
         if self._write_file:
             fh.setFormatter(formatter_fh)
@@ -56,13 +56,13 @@ class Log:
         sh.setFormatter(formatter_sh)
         logger.addHandler(sh)
 
-        if level == 'info':
+        if level == "info":
             logger.info(message)
-        elif level == 'debug':
+        elif level == "debug":
             logger.debug(message)
-        elif level == 'warning':
+        elif level == "warning":
             logger.warn(message)
-        elif level == 'error':
+        elif level == "error":
             logger.error(message)
 
         logger.removeHandler(sh)
@@ -71,16 +71,16 @@ class Log:
         fh.close()
 
     def debug(self, message: str):
-        self.__printconsole('debug', message)
+        self.__printconsole("debug", message)
 
     def info(self, message: str):
-        self.__printconsole('info', message)
+        self.__printconsole("info", message)
 
     def warning(self, message: str):
-        self.__printconsole('warning', message)
+        self.__printconsole("warning", message)
 
     def error(self, message: str):
-        self.__printconsole('error', message)
+        self.__printconsole("error", message)
 
 
 # get instance of class Log

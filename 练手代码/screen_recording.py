@@ -1,8 +1,14 @@
-import cv2, threading, wave, queue, time, pyaudio
-from PIL import ImageGrab
-import numpy as np
-from moviepy.editor import *
+import queue
+import threading
+import time
+import wave
 from typing import List
+
+import cv2
+import numpy as np
+import pyaudio
+from moviepy.editor import *
+from PIL import ImageGrab
 
 
 class Recorder:

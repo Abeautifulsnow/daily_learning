@@ -1,9 +1,11 @@
 import os
+
 #from pathlib import Path
 import sys
-import pymysql
+
 import paramiko
- 
+import pymysql
+
 #每次只能迁移一个DB下的表，到指定DB
 #GRANT SELECT, CREATE, RELOAD, ALTER, LOCK TABLES ON *.* TO 'data_migration'@'192.168.%' IDENTIFIED BY 'data_migration@123';
 tables='sqlauto_cluster,sqlauto_user'    #以，分割的字符串，如a,b,c

@@ -3,7 +3,6 @@
 from django import template
 from myblog.models import Blog
 
-
 register = template.Library()
 
 

@@ -1,11 +1,20 @@
 from django.urls import path, re_path
 from django.views.static import serve
 
+from .feeds import BlogRssFeed
+from .views import (
+    AddCommentView,
+    ArchiveView,
+    BlogDetailView,
+    CategoryDetaiView,
+    IndexView,
+    MySearchView,
+    TagDetailView,
+    TagView,
+)
+
 # from blog.settings import MEDIA_ROOT, STATIC_ROOT
 
-from .feeds import BlogRssFeed
-from .views import IndexView, ArchiveView, TagDetailView, TagView, BlogDetailView,\
-    AddCommentView, CategoryDetaiView, MySearchView
 
 
 urlpatterns = [

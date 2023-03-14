@@ -1,8 +1,9 @@
-import os, sys, re
-import os.path
 import filecmp
+import os
+import os.path
+import re
 import shutil
-
+import sys
 
 holderlist = []
 

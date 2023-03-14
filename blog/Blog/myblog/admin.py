@@ -1,5 +1,6 @@
 from django.contrib import admin
-from myblog.models import Blog, Category, Tag, Comment, Counts
+from myblog.models import Blog, Category, Comment, Counts, Tag
+
 # Register your models here.
 
 

@@ -4,7 +4,6 @@ __date__ = '18-11-2 下午6:56'
 
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
-
 from myblog.models import Blog
 
 

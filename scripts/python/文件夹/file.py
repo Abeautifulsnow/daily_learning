@@ -1,7 +1,6 @@
-import os
 import glob
+import os
 import shutil
-
 
 # 定义一个文件字典，不同的文件类型，属于不同的文件夹，一共9个大类。
 file_dict = {

@@ -1,5 +1,5 @@
-import turtle
 import time
+import turtle
 
 
 def little_heart():

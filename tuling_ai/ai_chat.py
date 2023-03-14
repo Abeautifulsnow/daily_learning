@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-import sys
 import json
+import sys
 import time
-import requests
 
+import requests
 
 # 人机对话所用机器人为图灵机器人，每日请求总数为100，请手动去图灵官网申请自己的机器人替换配置KEY与USER_ID
 Tuling_API_URL = "http://openapi.tuling123.com/openapi/api/v2"

@@ -1,8 +1,8 @@
 """
 An Interesting Method to Generate Binary Numbers from 1 to n.
 """
-import time
 import sys
+import time
 from queue import Queue
 
 

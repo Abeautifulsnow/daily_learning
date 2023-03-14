@@ -1,6 +1,6 @@
-import urllib.request
 import re
 import sys
+import urllib.request
 
 
 def ISIP(s):

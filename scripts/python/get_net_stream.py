@@ -1,5 +1,7 @@
 from __future__ import print_function
+
 from pprint import pprint
+
 
 def net_stat():
     net = {}

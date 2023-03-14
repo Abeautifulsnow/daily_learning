@@ -9,6 +9,8 @@ print(secret_key)
 
 # 在没有django的情况下，用这个生成方式
 import random
+
+
 def get_random_secret_key(length=50):
     """
     Return a 50 character random string usable as a SECRET_KEY setting value.

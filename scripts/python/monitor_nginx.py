@@ -1,5 +1,6 @@
-import os, sys, time
-
+import os
+import sys
+import time
 
 while True:
     print("==============检测nginx是否正在运行===============")

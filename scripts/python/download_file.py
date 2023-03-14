@@ -1,8 +1,8 @@
-import aiohttp
 import asyncio
 import time
-
 from typing import Any, AnyStr, List
+
+import aiohttp
 
 
 async def job(session: Any, url: AnyStr) -> AnyStr:

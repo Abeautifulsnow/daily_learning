@@ -1,6 +1,5 @@
 import os
 
-
 list1 = []
 sum = 0
 str1 = os.popen('ps aux', 'r').readlines()
