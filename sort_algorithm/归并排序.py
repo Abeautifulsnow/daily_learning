@@ -37,6 +37,24 @@ def merge(left: typing.List[int], right: typing.List[int]):
     return result
 
 
+def merge1(left: typing.List[int], right: typing.List[int]):
+    result = []
+    i, j = 0, 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+
 if __name__ == "__main__":
     nums = input("请输入一串数字,  数字之间空一个间隔：")
     arr = list(map(int, nums.rstrip().split()))
