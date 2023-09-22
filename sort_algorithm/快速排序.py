@@ -117,19 +117,29 @@ def quickSort5(alist: list, start: int, end: int):
     high = end
 
     while low < high:
+        # 比较最右侧的值与基准值的大小，如果大于基准值，就右指针往左侧移动
+        # 直到右值小于基准值或右指针小于等于左指针，退出此轮循环
         while low < high and alist[high] >= pivot:
             high -= 1
-
+        
+        # 然后走到此位置时high指向一个比基准元素小的元素,将high指向的元素放到low的位置上,此时high指向的位置空着,接下来移动low找到符合条件的元素放在此处
         alist[low] = alist[high]
 
+        # 比较最左侧的值与基准值的大小，如果小于基准值，就左指针往右侧移动
+        # 直到左值大于等于基准值或左指针大于等于右指针，退出此轮循环
         while low < high and alist[low] < pivot:
             low += 1
-
+        # 然后此时low指向一个比基准元素大的元素,将low指向的元素放到high空着的位置上,此时low指向的位置空着,之后进行下一次循环,将high找到符合条件的元素填到此处
         alist[high] = alist[low]
 
+    # 退出循环后，low与high重合，此时所指位置为基准元素的正确位置,左边的元素都比基准元素小,右边的元素都比基准元素大
+    # 将基准元素放到该位置
     alist[low] = pivot
 
+    # 对基准元素左边的子序列进行快速排序
     quickSort5(alist, start, low - 1)
+
+    # 对基准元素右边的子序列进行快速排序
     quickSort5(alist, low + 1, end)
 
 
