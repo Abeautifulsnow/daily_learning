@@ -108,6 +108,31 @@ def quickSort4(arr: List, left: int, right: int):
     quickSort4(arr, prev + 1, right)
 
 
+def quickSort5(alist: list, start: int, end: int):
+    if start >= end:
+        return
+
+    pivot = alist[start]
+    low = start
+    high = end
+
+    while low < high:
+        while low < high and alist[high] >= pivot:
+            high -= 1
+
+        alist[low] = alist[high]
+
+        while low < high and alist[low] < pivot:
+            low += 1
+
+        alist[high] = alist[low]
+
+    alist[low] = pivot
+
+    quickSort5(alist, start, low - 1)
+    quickSort5(alist, low + 1, end)
+
+
 if __name__ == "__main__":
     n = input("请输入一串数字, 数字之间空一个间隔：")
     arr = list(map(int, n.rstrip().split()))
