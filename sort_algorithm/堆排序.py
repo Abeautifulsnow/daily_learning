@@ -39,4 +39,4 @@ def heap_sort(arr: list):
         # 然后逐个和0去做比较并交换
         for i in range(n - 1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i]  # 交换
-            heapify(arr, i, 0)
+            heapify(arr, i, 0)  # 交换完后, 再构建一下堆
