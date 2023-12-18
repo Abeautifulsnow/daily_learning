@@ -11,7 +11,7 @@
 3.对不是空的桶进行排序；
 4.按顺序访问桶，将桶中的元素依次放回到原序列中对应的位置，完成排序。
 """
-
+import math
 from typing import List
 
 
@@ -20,15 +20,16 @@ def bucket_sort(arr: List[int]):
     min_num = min(arr)
     max_num = max(arr)
     # 桶的大小
-    bucket_range = (max_num - min_num) / len(arr)
+    bucket_range = math.ceil((max_num - min_num) / len(arr))
     # 桶数组
-    count_list = [[] for i in range(len(arr) + 1)]
+    count_list = [[] for _ in range(len(arr) + 1)]
     # 向桶数组填数
     for i in arr:
-        count_list[int((i - min_num) // bucket_range)].append(i)
+        count_list[(i - min_num) // bucket_range].append(i)
     arr.clear()
     # 回填，这里桶内部排序直接调用了sorted
     for i in count_list:
+        print(i)
         for j in sorted(i):
             arr.append(j)
 
@@ -40,3 +41,4 @@ if __name__ == "__main__":
     arr = list(map(int, nums.rstrip().split()))
     result = bucket_sort(arr)
     print("归并排序的结果为：", result)
+
