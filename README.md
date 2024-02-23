@@ -1,2 +1,2 @@
-# python_learning
-The road to learn python
+# daily_learning
+Collect various language common scripts.
