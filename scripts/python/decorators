@@ -1,0 +1,24 @@
+"""装饰器集合"""
+
+import contextlib
+import warnings
+
+
+  # Warning的提示过滤掉
+class IgnoreWarnings:
+    def __init__(self, function):
+        self.function = function
+
+    def __call__(self, *args, **kwargs):
+        with contextlib.suppress(IndexError, ValueError):
+            with warnings.catch_warnings(record=True):
+                for _category in [
+                    Warning,
+                    SyntaxWarning,
+                    RuntimeWarning,
+                    FutureWarning,
+                    DeprecationWarning,
+                    PendingDeprecationWarning,
+                ]:
+                    warnings.filterwarnings(action="ignore", category=_category)
+                return self.function(*args, **kwargs)
