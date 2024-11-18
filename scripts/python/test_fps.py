@@ -14,15 +14,23 @@ ip = parser.add_argument("-i", "--ip", type=str)
 args = parser.parse_args()
 alive_set = Event()
 
+exit_msg = "\nAll processes have exited."
+
 
 def test_fps(args: Any, event: Event, fps_q: Queue, name: str):
     frame_id = 0
 
     cap = cv2.VideoCapture(
-        f"rtsp://admin:zwsz1234@{args.ip}:554/Streaming/Channels/101"
+        f"rtsp://username:password@{args.ip}:554/Streaming/Channels/101"
     )
     string = ""
     current_time = time.time()
+    if cap.isOpened():
+        print(f"Enter `q` to exit...\n{'-' * 40}")
+    else:
+        print("The camera is not opened yet.")
+        exit(0)
+
     while True:
         try:
             ret, _ = cap.read()
@@ -56,10 +64,16 @@ def test_fps(args: Any, event: Event, fps_q: Queue, name: str):
 
 def test_time(time_start: float, event: Event, time_q: Queue, name: str):
     while True:
-        if event.is_set():
-            time_now = time.time()
-            cost = f"{time_now - time_start:.3f}s."
-            time_q.put([name, cost])
+        try:
+            if event.is_set():
+                try:
+                    time_now = time.time()
+                    cost = f"{time_now - time_start:.3f}s."
+                    time_q.put([name, cost])
+                except (KeyboardInterrupt, Exception) as e:
+                    exit(0)
+        except (KeyboardInterrupt, Exception) as e:
+            exit(0)
 
 
 def print_progress(progress: "OrderedDict"):
@@ -85,14 +99,15 @@ def print_progress(progress: "OrderedDict"):
 def kill_pid(processes: List[Process]):
     try:
         for p in processes:
-            p.kill()
+            p.terminate()
 
     except Exception as e:
-        sys.stderr.write(e)
+        sys.stderr.write(f"Detailed error: {e}")
+        exit(0)
 
 
 def main():
-    print(f"Enter `q` to exit...\n{'-' * 40}")
+    print("Test the fps of camera...")
     status = Queue(maxsize=2)
     progress = OrderedDict()
     processes = []
@@ -126,10 +141,12 @@ def main():
                     break
 
     except KeyboardInterrupt:
-        atexit.register(kill_pid, args=(processes,))
+        atexit.register(kill_pid, *(processes,))
+        print(exit_msg)
         exit(0)
 
 
 if __name__ == "__main__":
     main()
-    print("\nAll processes have exited.")
+    print(exit_msg)
+
