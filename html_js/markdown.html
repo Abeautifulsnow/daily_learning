@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown with Mermaid and ECharts</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #2ecc71;
+            --secondary-dark: #27ae60;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e1e4e8;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --header-bg: #24292e;
+            --header-text: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .main-content {
+            max-width: 1600px; /* 增加最大宽度 */
+            margin: 2rem auto;
+            padding: 0 1rem; /* 减少左右内边距 */
+            width: 95%; /* 使用更大的宽度百分比 */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 600px;
+            gap: 1.5rem; /* 减少间隙以提供更多内容空间 */
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            width: 100%; /* 确保容器使用全部可用宽度 */
+        }
+
+        .editor, .preview {
+            flex: 1;
+            min-width: 400px; /* 增加最小宽度 */
+        }
+
+        .editor {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview {
+            border-left: 1px solid var(--border-color);
+            padding-left: 1.5rem; /* 减少左侧内边距，提供更多内容空间 */
+            overflow-y: auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 1rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            resize: vertical;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto;
+            background-color: #fafbfc;
+            color: #24292e;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        button i {
+            font-size: 1rem;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .secondary-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        /* Content styling */
+        #content {
+            padding: 1rem;
+            background-color: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        #content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--text-color);
+        }
+
+        #content h1 {
+            font-size: 2rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #content h2 {
+            font-size: 1.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #content h3 {
+            font-size: 1.25rem;
+        }
+
+        #content p {
+            margin-bottom: 1rem;
+        }
+
+        #content strong {
+            font-weight: 600;
+        }
+
+        #content em {
+            font-style: italic;
+        }
+
+        #content blockquote {
+            padding: 0 1rem;
+            color: var(--light-text);
+            border-left: 0.25rem solid var(--border-color);
+            margin: 0 0 1rem 0;
+        }
+
+        #content ul, #content ol {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        #content li {
+            margin-bottom: 0.5rem;
+        }
+
+        #content a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        #content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code blocks */
+        #content pre {
+            background-color: #f6f8fa;
+            border-radius: var(--radius);
+            padding: 1rem;
+            overflow: auto;
+            margin-bottom: 1rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        #content code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.85rem;
+            padding: 0.2em 0.4em;
+            background-color: rgba(27, 31, 35, 0.05);
+            border-radius: 3px;
+        }
+
+        #content pre code {
+            background-color: transparent;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        /* Table styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0 1.5rem 0;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f3f5;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #f1f3f5;
+        }
+
+        /* Mermaid and ECharts */
+        .mermaid {
+            margin: 1.5rem 0;
+            text-align: center;
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .echarts {
+            width: 100%;
+            height: 400px;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .error {
+            color: #e74c3c;
+            background-color: #fdf3f2;
+            border: 1px solid #f5c6cb;
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) { /* 增加断点宽度，使得在更大的屏幕上也能保持平铺布局 */
+            .container {
+                flex-direction: column;
+            }
+
+            .preview {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding-left: 0;
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+                width: 100%; /* 确保在垂直布局中使用全宽 */
+            }
+
+            .editor {
+                width: 100%; /* 确保在垂直布局中使用全宽 */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+
+            #content h1 {
+                font-size: 1.75rem;
+            }
+
+            #content h2 {
+                font-size: 1.35rem;
+            }
+
+            #content h3 {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Markdown Editor with Mermaid and ECharts</h1>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="editor">
+                <div class="section-header">
+                    <h2>Markdown Input</h2>
+                </div>
+                <textarea id="markdown-input">## Example Markdown
+
+This is a **markdown** example with support for _Mermaid_ diagrams and _ECharts_ visualizations.
+
+### Table Example
+
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
+| Row 3, Col 1 | Row 3, Col 2 | Row 3, Col 3 |
+
+### Mermaid Diagram Example
+
+```mermaid
+graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug]
+    D --> B
+```
+
+### ECharts Example
+
+```echarts
+{
+  "title": {
+    "text": "ECharts Example"
+  },
+  "tooltip": {},
+  "legend": {
+    "data": ["Sales"]
+  },
+  "xAxis": {
+    "data": ["Shirts", "Cardigans", "Chiffons", "Pants", "Heels", "Socks"]
+  },
+  "yAxis": {},
+  "series": [{
+    "name": "Sales",
+    "type": "bar",
+    "data": [5, 20, 36, 10, 10, 20]
+  }]
+}
+```
+
+### Code Example
+
+```javascript
+function hello() {
+  console.log("Hello, world!");
+}
+```
+</textarea>
+                <div class="button-group">
+                    <button id="render-btn" class="primary-btn"><i class="fas fa-play"></i> Render</button>
+                    <button id="fetch-data-btn" class="secondary-btn"><i class="fas fa-download"></i> Fetch Example Data</button>
+                </div>
+            </div>
+            <div class="preview">
+                <div class="section-header">
+                    <h2>Preview</h2>
+                </div>
+                <div id="content"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize mermaid with specific configuration
+        mermaid.initialize({
+            startOnLoad: true,
+            securityLevel: 'loose',
+            theme: 'default'
+        });
+
+        // Create a custom renderer for marked
+        const renderer = {
+            code(code, language) {
+                if (language === 'mermaid') {
+                    // For mermaid, just return the div with the content
+                    return `<div class="mermaid">${code}</div>`;
+                } else if (language === 'echarts') {
+                    try {
+                        // Validate JSON before rendering
+                        JSON.parse(code);
+                        const uniqueId = 'echarts-' + Math.random().toString(36).substring(2, 10);
+                        return `<div class="echarts" id="${uniqueId}" data-options="${encodeURIComponent(code)}"></div>`;
+                    } catch (error) {
+                        return `<div class="error">Invalid ECharts JSON: ${error.message}</div>`;
+                    }
+                }
+                // For other languages, use regular code blocks
+                return `<pre><code class="language-${language || ''}">${code}</code></pre>`;
+            }
+        };
+
+        // Set up marked with our custom renderer
+        marked.use({ renderer });
+
+        // Function to render markdown
+        function renderMarkdown() {
+            const markdownText = document.getElementById('markdown-input').value;
+            const contentDiv = document.getElementById('content');
+
+            // Clear previous content
+            contentDiv.innerHTML = '';
+
+            // Render markdown
+            contentDiv.innerHTML = marked.parse(markdownText);
+
+            // Re-run mermaid to process all diagrams
+            try {
+                mermaid.contentLoaded();
+            } catch (error) {
+                console.error("Mermaid processing error:", error);
+                document.querySelectorAll('.mermaid').forEach(element => {
+                    element.innerHTML = `<div class="error">Mermaid Error: ${error.message}</div>`;
+                });
+            }
+
+            // Process all ECharts visualizations
+            document.querySelectorAll('.echarts').forEach(element => {
+                try {
+                    const options = JSON.parse(decodeURIComponent(element.dataset.options));
+                    const chart = echarts.init(element);
+                    chart.setOption(options);
+
+                    // Handle window resize
+                    window.addEventListener('resize', () => {
+                        chart.resize();
+                    });
+                } catch (error) {
+                    console.error("ECharts initialization error:", error);
+                    element.innerHTML = `<div class="error">ECharts Error: ${error.message}</div>`;
+                }
+            });
+        }
+
+        // Fetch data from API
+        async function fetchData(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error("Fetch failed:", error);
+                throw error;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('render-btn').addEventListener('click', renderMarkdown);
+
+        document.getElementById('fetch-data-btn').addEventListener('click', async () => {
+            try {
+                const res = await fetchData('http://localhost:9001/mcp/tools');
+                const result = res["result"];
+                if (result && result["overview"]) {
+                    document.getElementById('markdown-input').value = result["overview"];
+                    renderMarkdown();
+                } else {
+                    alert('No overview data found in the response');
+                }
+            } catch (error) {
+                alert(`Failed to fetch data: ${error.message}`);
+            }
+        });
+
+        // Initial render when page loads
+        document.addEventListener('DOMContentLoaded', renderMarkdown);
+    </script>
+</body>
+
+</html>
